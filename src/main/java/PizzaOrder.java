@@ -11,14 +11,22 @@ public class PizzaOrder extends HttpServlet{
 
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String crust = req.getParameter("crust");
+        req.getRequestDispatcher("/pizza-order.jsp").forward(req, resp);
 
-        req.setAttribute("crust", crust);
     }
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        String crust = req.getParameter("crust");
+        req.setAttribute("crust", crust);
+        System.out.println(crust);
+        String[] toppings = req.getParameterValues("toppings");
+        for(String topping : toppings){
+            System.out.println(topping);
+        }
+        String address = req.getParameter("customerAddress");
+        System.out.println("Deliver to: " + address);
         req.getRequestDispatcher("/pizza-order.jsp").forward(req, resp);
-        resp.getWriter().println(crust);
+
+
     }
 }
