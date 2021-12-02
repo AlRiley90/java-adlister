@@ -9,13 +9,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+<jsp:include page="partials/head.jsp"/>
     <title>Title</title>
 </head>
 <body>
 <%--    <jsp:include page="partials/navbar.jsp"/>--%>
         <div class="container">
             <h1>Create your own pizza</h1>
-            <form action="/pizza-order" method="POST">
+            <form method="POST">
                 <div class="form-group">
                     <label for="crust">Choose your Crust</label>
                     <select id="crust" name="crust" class="form-control">

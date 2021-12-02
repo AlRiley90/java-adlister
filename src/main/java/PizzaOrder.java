@@ -16,17 +16,13 @@ public class PizzaOrder extends HttpServlet{
     }
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String crust = req.getParameter("crust");
-        req.setAttribute("crust", crust);
-        System.out.println(crust);
+        System.out.println(req.getParameter("crust"));
         String[] toppings = req.getParameterValues("toppings");
         for(String topping : toppings){
             System.out.println(topping);
         }
-        String address = req.getParameter("customerAddress");
-        System.out.println("Deliver to: " + address);
+        System.out.println("Deliver to: " + req.getParameter("customerAddress"));
         req.getRequestDispatcher("/pizza-order.jsp").forward(req, resp);
-
 
     }
 }
