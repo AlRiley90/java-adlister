@@ -7,7 +7,10 @@
 </head>
 <body>
     <jsp:include page="partials/navbar.jsp" />
-
+<%--    Use the next line for the guessing game--%>
+    <c:if test="${adminView}">
+        <div>This is for admins only</div>
+    </c:if>
     <div class="container">
         <h1>Viewing your profile.</h1>
     </div>
