@@ -6,6 +6,12 @@ public class Author {
     public Author() {
     }
 
+    public Author(int id, String firstName, String lastName){
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
     public int getId() {
         return id;
     }

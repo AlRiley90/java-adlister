@@ -11,6 +11,15 @@ private String genre;
     public Album() {
     }
 
+    public Album(int id, String artist, String name, int releaseDate, float sales, String genre){
+        this.id = id;
+        this.artist = artist;
+        this.name = name;
+        this.releaseDate = releaseDate;
+        this.sales = sales;
+        this.genre = genre;
+    }
+
     public int getId() {
         return id;
     }
