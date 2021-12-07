@@ -14,18 +14,21 @@ public class CreateAdServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Ad ad = new Ad();
+                String title = request.getParameter("title");
+                String description = request.getParameter("description");
+                ad.setTitle(title);
+                ad.setDescription(description);
+                ad.setUserId(1L);
+                long savedId = 0;
 
-
-        Ad ad = new Ad(
-            1, // for now we'll hardcode the user id
-            request.getParameter("title"),
-            request.getParameter("description")
-        );
         try {
-            DaoFactory.getAdsDao().insert(ad);
+            savedId = DaoFactory.getAdsDao().insert(ad);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        ad.setId(savedId);
+
         response.sendRedirect("/ads");
     }
 }

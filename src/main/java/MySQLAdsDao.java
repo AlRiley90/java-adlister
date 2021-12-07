@@ -17,42 +17,56 @@ public class MySQLAdsDao implements Ads{
     }
 
     @Override
-    public List<Ad> all() throws SQLException {
+    public List<Ad> all() {
         String selectQuery = "SELECT * FROM ads";
 //        Statement stmt = null;
 //        ResultSet rs = null;
         List<Ad> adList = new ArrayList<>();
+    try {
+        Statement stmt = connection.createStatement();
+        ResultSet rs = stmt.executeQuery(selectQuery);
 
-       Statement stmt = connection.createStatement();
-       ResultSet rs = stmt.executeQuery(selectQuery);
+        while (rs.next()) {
+            adList.add(new Ad(
+                    rs.getLong("id"),
+                    rs.getLong("user_id"),
+                    rs.getString("title"),
+                    rs.getString("description")
+            ));
 
-        while(rs.next()){
-            Ad currentAd = new Ad(rs.getLong("id"), rs.getString("title"), rs.getString("description"));
-            adList.add(currentAd);
 
             System.out.println("Here is an ad: ");
             System.out.println(" Ad id: " + rs.getLong("id"));
             System.out.println(" Ad title: " + rs.getString("title"));
             System.out.println(" Ad description: " + rs.getString("description"));
         }
-        return null;
+    } catch (SQLException e){
+        e.printStackTrace();
+    }
+        return adList;
     }
 
     @Override
-    public Long insert(Ad ad) throws SQLException {
-        String query = "INSERT INTO ads (user_id, title, description) VALUES('PS4', 'brand new playstation')";
-        Statement stmt = connection.createStatement();
-        stmt.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
-        ResultSet rs = stmt.getGeneratedKeys();
-        if(rs.next()){
-            System.out.println("Added a new ad to collection: " + rs.getString("title"));
+    public Long insert(Ad ad) {
+        long newId = 0;
+        try {
+            String sql = "INSERT INTO ads (user_id, title, description) " +
+                    "VALUES("+ad.getUserId()+", '"+ad.getTitle()+"', '"+ad.getDescription()+"')";
+            Statement stmt = connection.createStatement();
+            stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+            ResultSet rs = stmt.getGeneratedKeys();
+            if (rs.next()) {
+                newId = rs.getLong(1);
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
         }
-        return null;
+        return newId;
     }
 
-    public static void main(String[] args) throws SQLException {
-        MySQLAdsDao testDAO = new MySQLAdsDao();
-
-        testDAO.all();
-    }
+//    public static void main(String[] args) throws SQLException {
+//        MySQLAdsDao testDAO = new MySQLAdsDao();
+//
+//        testDAO.all();
+//    }
 }
