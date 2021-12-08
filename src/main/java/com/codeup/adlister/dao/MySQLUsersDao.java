@@ -26,7 +26,7 @@ public class MySQLUsersDao implements Users{
     @Override
     public User findByUsername(String username) throws SQLException {
         String sql = "SELECT * FROM users WHERE username LIKE ?";
-        String searchTerm = "%" + searchTerm + "%";
+//        String searchTerm = "%" + searchTerm + "%";
 
         PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
